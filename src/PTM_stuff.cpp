@@ -81,7 +81,15 @@ void Config::read_PTM_file(char *file)
 			exit(1);
 		}
 		
-		// add PTMs
+		// add PTMs	
+		if (region == PTM_C_TERMINAL || region == PTM_N_TERMINAL)
+		{
+			if (type == PTM_FIXED)
+			{
+				cout << "Warning: terminal PTMs must be of type OPTIONAL! Treating FIXED modification as OPTIONAL." << endl;
+				type = PTM_OPTIONAL;
+			}
+		}			
 		PTM ptm = PTM(aa, offset , type , region ,position, symbol, name);
 		if (region == PTM_C_TERMINAL || region == PTM_N_TERMINAL)
 		{
